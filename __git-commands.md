@@ -32,3 +32,6 @@ git log
 
 # undo last commit
 git reset HEAD~
+
+# clone (copy) someone's repo
+git clone repo link -> get from the green button in the repo
