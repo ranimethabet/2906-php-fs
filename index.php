@@ -12,6 +12,9 @@
 
     <nav>
         <a href="/">Home</a>
+        <a href="variables.php">Variables</a>
+        <a href="variables-01.php">Variables-01</a>
+        <a href="functions.php">Functions</a>
     </nav>
 </body>
 </html>
