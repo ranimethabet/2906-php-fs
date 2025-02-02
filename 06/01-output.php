@@ -46,7 +46,7 @@
         <h2>ECHO</h2>
         <section>
             <?php
-            echo $title . '<hr />';
+            echo $title .'<hr />';
             echo $x + $y . '<hr />';
             echo $ok . '<hr />';
             echo $no . '<hr />';

@@ -17,7 +17,7 @@ function res($msg, $n1, $n2, $val)
     echo '<hr />';
 }
 
-res('Sum: ', $x, $y, $x + $y);
+res('Sum: ', 3, 4, $x + $y);
 
 res('Subtract: ', $x, $y, $x - $y);
 
