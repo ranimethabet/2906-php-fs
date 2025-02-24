@@ -1,7 +1,7 @@
 <?php
 session_start();
 var_dump($_SESSION);
-
+#'errors' is an empty array defined in store-user page
 $errors = $_SESSION['errors'] ?? [];
 
 var_dump($errors);
