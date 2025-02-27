@@ -5,34 +5,43 @@ session_start();
 require_once 'functions.php';
 
 // user_id from the session storage after login
-$user_id = 104;
+$user_id = 105;
 
 $errors = [];
 
 $old = $_POST;
-dd($_FILES);
 
 extract($_POST);
+var_dump($_FILES);
 
-// Photo
+// to get the photo from the user to the server Photo
 $image = $_FILES['image'];
 $tmp_name = $image['tmp_name'];
 $name = $image['name'];
 
-// dd(getimagesize($tmp_name));
+ //dd(getimagesize($tmp_name));
 
 $ext = pathinfo($name, PATHINFO_EXTENSION);
-
-$file_name = $user_id . date('ymdhis') . mt_rand(11111,99999) . '.' . $ext ;
-dd($file_name);
+//dd($ext);
 
 
-// dd([$from, $file_name]);
+//dd([$tmp_name, $file_name]);
 
-move_uploaded_file($from, "public/uploads/$file_name");
+//validate  Thumbnail
 
-dd([$from, $file_name]);
-
+if (isset ($_image))
+{
+    if ($image['size']>1*1024*1024){$errors['image']='Image is too large to upload!!';}
+    
+    elseif($image['error']!==UPLOAD_ERR_OK){$errors['image']='Error uploading image';}
+    
+    elseif(getimagesize($image['tmp_name'])===false) {$errors['image']='Invalid image file';}
+    elseif($ext!=='gif'){$errors['image']='not the type';}
+    else
+   { $file_name = $user_id . date('ymdhis') . mt_rand(11111,99999) . '.' . $ext ;    
+    move_uploaded_file($tmp_name, "public/$file_name");
+   }
+}
 
 // Validate title
 if ($title === '') {
@@ -69,7 +78,7 @@ if (!isset($tags)) {
 
 
 // Validate type
-if ($type === '') {
+if ($type==='-Select a post type-') {
     $errors['type'] = 'Select post type';
 } elseif (!in_array($type, [1, 2, 3, 4])) {
     $errors['type'] = 'Selected post type is not valid!!!';
@@ -82,4 +91,4 @@ if (count($errors) > 0) {
     // Navigate to register page
     header('location: add-post.php');
 } else
-    header('location: /');
+    header('location:done.php');

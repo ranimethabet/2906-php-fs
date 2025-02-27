@@ -88,18 +88,19 @@ $old = $_SESSION['old'] ?? [];
             <label for="type">Type</label>
             <select name="type" id="type">
                 <option>-Select a post type-</option>
-                <option <?= $old['type'] == '4' ? 'selected' : ''; ?> value="4">Sports</option>
-                <option <?= $old['type'] == '1' ? 'selected' : ''; ?> value="1">News</option>
-                <option <?= $old['type'] == '2' ? 'selected' : ''; ?> value="2">Art</option>
-                <option <?= $old['type'] == '3' ? 'selected' : ''; ?> value="3">Cars</option>
+                <option <?=isset($old['type'])&& $old['type'] == '4' ? 'selected' : ''; ?> value="4">Sports</option>
+                <option <?=isset($old['type'])&& $old['type'] == '1' ? 'selected' : ''; ?> value="1">News</option>
+                <option <?= isset($old['type'])&&$old['type'] == '2' ? 'selected' : ''; ?> value="2">Art</option>
+                <option <?= isset($old['type'])&&$old['type'] == '3' ? 'selected' : ''; ?> value="3">Cars</option>
             </select>
             <p class="errors"><?= @$errors['type']; ?></p>
         </div>
-
+        
         <!-- Thumbnail -->
         <div>
             <label for="image">Post Image</label>
-            <input type="file" name="image" accept=".jpg,.png" id="image">
+            <input type="file" name="image" id="image">
+            <p class="errors"><?= @$errors['image']; ?></p>
         </div>
 
         <!-- other images -->
