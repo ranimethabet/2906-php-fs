@@ -14,3 +14,4 @@ function increase($price)
 $new_prices = array_map('increase', $prices);
 
 var_dump($new_prices);
+var_dump($prices);

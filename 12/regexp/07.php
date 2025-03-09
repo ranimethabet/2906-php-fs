@@ -78,8 +78,11 @@
         <button type="submit">Submit</button>
     </form>
     <?php
+    #to check if the form was submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    #get the mobile number submitted by the user 
         $mobile = $_POST["mobile"];
+     # check the validation of the submitted mobile number & echo valid or not 
         $pattern = "/^(010|011|012|015)[0-9]{8}$/";
         if (preg_match($pattern, $mobile)) {
             echo "<p class='success'>✅ Valid Egyptian mobile number!</p>";

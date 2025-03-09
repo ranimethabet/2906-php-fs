@@ -1,4 +1,4 @@
-<pre>
+
 <?php
 session_start();
 
@@ -10,13 +10,14 @@ $user_id = 104;
 $errors = [];
 
 $old = $_POST;
-// dd($_FILES);
 
 extract($_POST);
 
 // Photo
 $image = $_FILES['image'] ?? [];
 $images = $_FILES['images'] ?? [];
+$img = getimagesize($tmp_name);
+var_dump($img);
 
 // Single Photo
 $tmp_name = $image['tmp_name'];
@@ -32,7 +33,7 @@ if ($name == '') {
     $errors['image'] = 'File size exceeded the limit(2MB)';
 } else {
     $img = getimagesize($tmp_name);
-
+dd($img);
     if (!$img) {
         $errors['image'] = 'Uploaded file is not an image';
     } else {
@@ -40,9 +41,10 @@ if ($name == '') {
         
         $file_name = $user_id . date('ymdhis') . mt_rand(11111, 99999) . '.' . $ext;
         
-        if (!move_uploaded_file($tmp_name, "public/uploads/$file_name")) {
+        if (!move_uploaded_file($tmp_name, "uploads/$file_name")) {
             $errors['image'] = 'File not uploaded';
         }
+    
     }
 }
 

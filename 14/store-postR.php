@@ -1,51 +1,84 @@
-<?php
+<?php 
 session_start();
-
+extract ($_POST);
 $errors=[];
 $old=$_POST;
-
-
-extract($_POST);
-#validate title
+## validate the title
 if ($title==='')
 {
-    $errors['title']='title is required';
-}
-elseif(!preg_match("/^[a-z\s]{3,30}$/i",$title))
-{
-    $errors['title']='title is not valid';
+$errors['title']='Title is required';
 }
 
-//body
-if($body==='')
+elseif(!preg_match("/^[A-Z][a-z\s\d]{2,30}$/",$title))
 {
-    $errors['body']='the body is required';
+    $errors['title']=' Title is not valid';
 }
-elseif(!preg_match('/^[a-z\s\W\d]{10,100}$/',$body))
+
+
+
+## validate body
+
+if ($body==='')
 {
-    $errors['body']='the body is not valid';
+$errors['body']='Body is required';
 }
-//post_status_id
+
+elseif(!preg_match("/^[A-Z][a-z\s\d]{10,100}$/",$body))
+{
+    $errors['body']=' Body is not valid';
+}
+
+
+## validate post_status_id
 if (!isset($post_status_id))
 {
-$errors['post_status_id']='select a status';
-}
-//Tags
-if (!isset($tags))
+    $errors['post_status_id']='You must choose at least one status';
+} 
+
+elseif (!in_array($post_status_id,[1,2,3]))
 {
-$errors['tags']='select at least one tag';
+$errors['post_status_id']='status is not valid';
 }
-//type
-if (empty ($type))
-{
-    $errors['type']='select the type';
+
+## validate tags
+
+if (!isset($tags)) {
+    $errors['tags'] = 'Select at least one tag';
+} else {
+
+$match=array_intersect($tags,['important','social','public','kids']);
+if (empty ($match))
+{$errors['post_status_id']='tag is not valid';}
 }
-if (count($errors)>0)
+
+if (!isset($tags)) {
+    $errors['tags'] = 'Select at least one tag';
+} else {
+
+    $match = array_intersect(['important', 'social', 'public', 'kids'], $tags);
+    if (empty($match)) {
+        $errors['tags'] = 'Selected tag is not in our database!!!';
+    }
+}
+
+
+## validate type
+
+if ($type==='-Select a post type-') {
+    $errors['type'] = 'Select post type';
+} elseif (!in_array($type, [1, 2, 3, 4])) {
+    $errors['type'] = 'Selected post type is not valid!!!';
+}
+
+
+##errors
+if (!empty($errors))
 {
 $_SESSION['errors']=$errors;
 $_SESSION['old']=$old;
-header('location:add-postR.php');
+header("location:add-postR.php");
 }
-else {
-    header('location:/');
+else 
+{   $_SESSION['old']=$old;
+    header('location:done.php');
 }

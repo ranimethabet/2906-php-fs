@@ -1,8 +1,7 @@
 <?php
 session_start();
 $errors=$_SESSION['errors'] ?? [];
-$old=$_SESSION['old']??[];
-
+$old=$_SESSION['old'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,35 +25,38 @@ $old=$_SESSION['old']??[];
         <!-- Title -->
         <div>
             <label>Title</label>
-            <input type="text" name="title" value="<?=@$old['title'];?>"placeholder="3 - 30 characters">
-           <p class="errors"><?=@$errors['title'];?> </p> 
-           
+            <input type="text" name="title" value="<?= @$old['title']; ?>" placeholder="3 - 30 characters">
+            <p class="errors"><?=@$errors['title'];?></p>
+            
+            
         </div>
         
         <!-- body -->
         <div>
             <label>Body</label>
-            <textarea name="body"></textarea>
-            <p class="errors"><?=@$errors['body'];?> </p> 
+            <textarea name="body"><?=@$old['body'];?></textarea>
+            <p class="errors"><?=@$errors['body'];?></p>
+            
             
         </div>
-
+        
         <!-- Status -->
         <div>
             <fieldset>
                 <legend>Status</legend>
-
-                <input type="radio" name="post_status_id" id="pending" value="1">
+                
+                <input type="radio" name="post_status_id" id="pending" value="1"<?=@$old['post_status_id']==='1'?'checked':''?>>
                 <label for="pending">Pending</label>
                 
-                <input type="radio" name="post_status_id" id="published" value="2">
+                <input type="radio" name="post_status_id" id="published" value="2" <?=@$old['post_status_id']==='2'?'checked':''?>>
                 <label for="published">Published</label>
                 
-                <input type="radio" name="post_status_id" id="archived" value="3">
+                <input type="radio" name="post_status_id" id="archived" value="3" <?=@$old['post_status_id']==='3'?'checked':''?>>
                 <label for="archived">Archived</label>
             </fieldset>
-
-            <p class="errors"><?=@$errors['post_status_id'];?> </p> 
+            
+            <p class="errors"><?=@$errors['post_status_id'];?></p>
+            
             
         </div>
         
@@ -62,40 +64,41 @@ $old=$_SESSION['old']??[];
         <div>
             <fieldset>
                 <legend>Tags</legend>
-                <input value="important" type="checkbox" name="tags[]" id="important">
+                <input value="important" type="checkbox" name="tags[]" id="important" <?=isset($old['tags']) && in_array('important',$old['tags'])?'checked':'';?>>
                 <label for="important">Important</label>
                 
-                <input value="social" type="checkbox" name="tags[]" id="social">
+                <input value="social" type="checkbox" name="tags[]" id="social" <?=isset($old['tags']) && in_array('social',$old['tags'])?'checked':'';?>>
                 <label for="social">Social</label>
                 
-                <input value="public" type="checkbox" name="tags[]" id="public">
+                <input value="public" type="checkbox" name="tags[]" id="public" <?=isset($old['tags']) && in_array('public',$old['tags'])?'checked':'';?>>
                 <label for="public">Public</label>
                 
-                <input value="kids" type="checkbox" name="tags[]" id="kids">
+                <input value="kids" type="checkbox" name="tags[]" id="kids"<?=isset($old['tags']) && in_array('kids',$old['tags'])?'checked':'';?>>
                 <label for="kids">Kids</label>
                 
                 
             </fieldset>
-            <p class="errors"><?= @$errors['tags']; ?></p>
+            <p class="errors"><?=@$errors['tags'];?></p>
+            
         </div>
         
         <!-- Type -->
         <div>
             <label for="type">Type</label>
             <select name="type" id="type">
-                <option value="">-Select a post type-</option>
-                <option value="1">News</option>
-                <option value="2">Art</option>
-                <option value="3">Cars</option>
-                <option value="4">Sports</option>
+                <option>-Select a post type-</option>
+                <option  <?=isset($old['type'])&&$old['type']==='1'?'selected':'';?> value="1">News</option>
+                <option <?=isset($old['type'])&&$old['type']==='2'?'selected':'';?> value="2">Art</option>
+                <option <?=isset($old['type'])&&$old['type']==='3'?'selected':'';?> value="3">Cars</option>
+                <option <?=isset($old['type'])&&$old['type']==='4'?'selected':'';?> value="4">Sports</option>
                 
                 
             </select>
-            <p class="errors"><?= @$errors['type']; ?></p>
+            <p class="errors"><?=@$errors['type'];?></p>
+            
         </div>
 
-      
-        
+    
         <div>
             <button type="Submit">Submit</button>
         </div>

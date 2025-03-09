@@ -1,0 +1,70 @@
+; embflopy.inf
+;
+; Installation inf for the Floppy Disk Drive (DDK Sample).
+;
+; (c) Copyright 1999 Microsoft Corp.
+; Portions Copyright (C) 2001 Wings Systems Ltd. All rights reserved.
+;
+[Version]
+Signature="$WINDOWS NT$"
+Class=FloppyDisk
+ClassGuid={4D36E980-E325-11CE-BFC1-08002BE10318}
+Provider=%WINGSXP%
+LayoutFile=layout.inf
+DriverVer=8/24/2001,5.01.01.005
+
+[ClassInstall32.NT]
+AddReg=floppy_class_addreg
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[floppy_class_addreg]
+HKR,,,,%floppyClassName%
+HKR,,EnumPropPages32,,"SysSetup.Dll,DiskPropPageProvider"
+HKR,,SilentInstall,,1
+HKR,,NoInstallClass,,1
+HKR,,TroubleShooter-0,,"tshoot.chm,hdw_drives.htm"
+HKR,,Icon,,102
+HKR,,DeviceType,0x10001,7                       ; FILE_DEVICE_DISK
+HKR,,DeviceCharacteristics,0x10001,0x100        ; Use same security checks on relative opens
+
+[floppy_copyfiles]
+embflopy.sys
+
+[DestinationDirs]
+floppy_copyfiles=12
+DefaultDestDir=12
+
+[Manufacturer]
+%GenManufacturer%=floppy_device
+
+[floppy_device]
+%floppy_devdesc%=floppy_install,*PNP0701
+%floppy_devdesc%=floppy_install,*PNP0702
+%floppy_devdesc%=floppy_install,*PNP0703
+%floppy_devdesc%=floppy_install,*PNP0704
+%floppy_devdesc%=floppy_install,GenFloppyDisk
+
+[floppy_install.NT]
+CopyFiles=floppy_copyfiles
+
+[floppy_install.NT.Services]
+AddService=embflopy,2,floppy_ServiceInstallSection
+
+[floppy_ServiceInstallSection]
+DisplayName=%floppy_ServiceDesc%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary = %12%\embflopy.sys
+
+[Strings]
+WINGSXP="Wings XP"
+floppyClassName="Floppy disk drives"
+GenManufacturer="Wings Systems Ltd."
+floppy_devdesc="Embroidery Floppy drive"
+floppy_ServiceDesc="Embroidery floppy Disk"
+
+REG_DWORD=0x00010001
+

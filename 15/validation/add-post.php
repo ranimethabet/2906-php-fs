@@ -99,7 +99,7 @@ $old = $_SESSION['old'] ?? [];
         <!-- Thumbnail -->
         <div>
             <label for="image">Post Image</label>
-            <input type="file" name="image" accept=".jpg,.png" id="image">
+            <input type="file" name="image" accept=".jpeg,.png" id="image">
             <div>
                 <p><?= @$errors['image']; ?></p>
             </div>
