@@ -1,0 +1,16 @@
+{
+    "name": "ranime/practice18",
+    "autoload": {
+        "psr-4": {
+            "":"models/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ranimethabet",
+            "email": "ranimethabet@gmail.com"
+        }
+    ],
+    "require": { "symfony/var-dumper": "^7.2"}
+
+}
